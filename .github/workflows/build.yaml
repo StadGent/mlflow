@@ -1,0 +1,21 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          context: docker
+          tags: |
+            stadgent/probe-mlflow:latest
+            stadgent/probe-mlflow:${{ github.sha }}
